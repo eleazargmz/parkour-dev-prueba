@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import { db } from "@/lib/db/index";
 import bcrypt from "bcrypt";
 
@@ -20,18 +19,16 @@ export const createUser = async (user: NewUserParams) => {
         email: userPayload.email,
       },
     });
-
     if (existingUser) {
       throw new Error('El correo electrónico ya existe');
     }
     const hashedPassword = await bcrypt.hash(userPayload.password, 10);
-
     const u = await db.user.create({ data: {
       name: userPayload.name,
       email: userPayload.email,
       password: hashedPassword,},
     });
-    return { user: u };
+    return { user: u, status: 200 };
   } catch (err) {
     const message = (err as Error).message ?? "Error, please try again";
     console.error(message);

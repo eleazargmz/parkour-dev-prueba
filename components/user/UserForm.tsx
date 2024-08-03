@@ -25,7 +25,6 @@ import {
 } from "@/lib/actions/user";
 import Link from "next/link";
 
-
 const UserForm = ({
 
   user,
@@ -72,12 +71,11 @@ const UserForm = ({
   };
 
   const handleSubmit = async (data: FormData) => {
-    console.log("validacion zod", data.get('name'))
     setErrors(null);
     const payload = Object.fromEntries(data.entries());
-    console.log('data registro ==> ', payload)
 
-    if(payload.password !== payload.confirmPassword) {
+  
+    if (payload.password !== payload.confirmPassword) {
       setError("Las contraseñas no coinciden")
       setTimeout(() => {
         setError("")
@@ -86,7 +84,6 @@ const UserForm = ({
     }
 
     const userParsed = await insertUserParams.safeParseAsync({ ...payload });
-    console.log('userParsed  registro ==> ', userParsed )
 
     if (!userParsed.success) {
       setErrors(userParsed?.error.flatten().fieldErrors);
@@ -95,7 +92,6 @@ const UserForm = ({
 
     closeModal && closeModal();
     const values = userParsed.data;
-    console.log('value registro ==> ', values)
     const pendingUser: User = {
       updatedAt: user?.updatedAt ?? new Date(),
       createdAt: user?.createdAt ?? new Date(),
@@ -112,17 +108,20 @@ const UserForm = ({
         const error = editing
           ? await updateUserAction({ ...values, id: user.id })
           : await createUserAction(values);
-          setError(error ?? "")
-          
+        setError(error ?? "")
+
         const errorFormatted = {
           error: error ?? "Error",
           values: pendingUser
         };
-        console.log("errorFormatted ==>",errorFormatted)
+
         onSuccess(
           editing ? "update" : "create",
           error ? errorFormatted : undefined,
         );
+        if (errorFormatted.error === "Error") {
+          router.push('/sign-in');
+        }
       });
     } catch (e) {
       if (e instanceof z.ZodError) {
@@ -140,59 +139,33 @@ const UserForm = ({
             Registro
           </h1>
           {error && <span className="text-xs text-red-500">{error}</span>}
-            <Input
-              type="text"
-              name="name"
-              placeholder="Username"
-              className={cn(errors?.name ? "ring ring-destructive" : "")}
-            // {...register("username", {
-            //   required: {
-            //     value: true,
-            //     message: 'Username is required'
-            //   }
-            // })}
-            />
-            {errors?.name && (
-              <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
-            )}
-            <Input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className={cn(errors?.email ? "ring ring-destructive" : "")}
-            // {...register("email", {
-            //   required: {
-            //     value: true,
-            //     message: 'Email is required'
-            //   }
-            // })}
-            />
-            {errors?.email && (
-              <p className="text-xs text-destructive text-red-500 mt-2">{errors.email}</p>
-            )}
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className={cn(errors?.password ? "ring ring-destructive" : "")}
-            // {...register("password", {
-            //   required: {
-            //     value: true,
-            //     message: 'Password is required'
-            //   }
-            // })}
-            />
-            {errors?.password && (
-              <p className="text-xs text-destructive text-red-500 mt-2">{errors.password}</p>
-            )}
-          {/* <Label
-            className={cn(
-              "mb-2 inline-block text-black",
-              errors?.password ? "text-destructive" : "",
-            )}
-          >
-            Password
-          </Label> */}
+          <Input
+            type="text"
+            name="name"
+            placeholder="Username"
+            className={cn(errors?.name ? "ring ring-destructive" : "")}
+          />
+          {errors?.name && (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
+          )}
+          <Input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className={cn(errors?.email ? "ring ring-destructive" : "")}
+          />
+          {errors?.email && (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.email}</p>
+          )}
+          <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            className={cn(errors?.password ? "ring ring-destructive" : "")}
+          />
+          {errors?.password && (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.password}</p>
+          )}
           <Input
             type="password"
             name="confirmPassword"
