@@ -135,7 +135,7 @@ const UserForm = ({
       <form action={handleSubmit} onChange={handleChange} className={"px-12 py-8 shadow-xl bg-gray-50 rounded-2xl"}>
         {/* Schema fields start */}
         <div>
-          <h1 className="w-full m-auto mb-4 text-black text-2xl font-bold text-center">
+          <h1 className="w-full m-auto mb-4 text-teal-600 text-2xl font-bold text-center">
             Registro
           </h1>
           {error && <span className="text-xs text-red-500">{error}</span>}
@@ -183,7 +183,7 @@ const UserForm = ({
         <SaveButton errors={hasErrors} editing={editing} />
         <Link
           href="/sign-in"
-          className=" flex justify-center items-center mt-3 text-center text-green-600"
+          className=" flex justify-center items-center mt-3 text-center text-teal-600"
         >
           Login
         </Link>
@@ -233,7 +233,7 @@ const SaveButton = ({
   return (
     <Button
       type="submit"
-      className="w-full p-2 mt-2 text-white bg-blue-500 rounded hover:bg-blue-600 font-bold"
+      className="w-full p-2 mt-2 text-white bg-teal-500 rounded hover:bg-teal-600 font-bold"
       disabled={isCreating || isUpdating || errors}
       aria-disabled={isCreating || isUpdating || errors}
     >

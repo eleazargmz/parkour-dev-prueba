@@ -1,5 +1,5 @@
 import { SidebarLink } from "@/components/SidebarItems";
-import { Cog, Globe, User, HomeIcon } from "lucide-react";
+import { Cog, UserPen, User, HomeIcon, NotebookPen } from "lucide-react";
 
 type AdditionalLinks = {
   title: string;
@@ -19,12 +19,12 @@ export const additionalLinks: AdditionalLinks[] = [
       {
         href: "/users",
         title: "Users",
-        icon: Globe,
+        icon: UserPen,
       },
       {
         href: "/personal-information",
         title: "Personal Information",
-        icon: Globe,
+        icon: NotebookPen,
       },
     ],
   },

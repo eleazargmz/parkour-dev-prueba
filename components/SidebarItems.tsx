@@ -48,13 +48,13 @@ const SidebarLinkGroup = ({
   return (
     <div className={border ? "border-border border-t my-8 pt-4" : ""}>
       {title ? (
-        <h4 className="px-2 mb-2 text-xs uppercase text-muted-foreground tracking-wider">
+        <h4 className="px-2 mb-2 text-sm font-bold uppercase text-muted-foreground tracking-wider">
           {title}
         </h4>
       ) : null}
       <ul>
         {links.map((link) => (
-          <li key={link.title}>
+          <li key={link.title} className="my-1">
             <SidebarLink link={link} active={pathname === link.href} />
           </li>
         ))}
@@ -72,8 +72,8 @@ const SidebarLink = ({
   return (
     <Link
       href={link.href}
-      className={`group transition-colors p-2 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-xs hover:shadow rounded-md w-full${
-        active ? " text-primary font-semibold" : ""
+      className={`group transition-colors p-3 inline-block hover:bg-popover hover:text-primary text-muted-foreground text-sm hover:bg-slate-200  hover:text-teal-500 rounded-s-2xl w-full${
+        active ? " text-primary bg-gray-200 text-teal-500 font-semibold" : ""
       }`}
     >
       <div className="flex items-center">
@@ -83,7 +83,7 @@ const SidebarLink = ({
             active ? "opacity-100" : "",
           )}
         />
-        <link.icon className="h-3.5 mr-1" />
+        <link.icon className="h-4.1 mr-1" />
         <span>{link.title}</span>
       </div>
     </Link>
