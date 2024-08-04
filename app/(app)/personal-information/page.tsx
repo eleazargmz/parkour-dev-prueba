@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import Loading from "@/app/loading";
 import PersonalInformationList from "@/components/personalInformation/PersonalInformationList";
-import { getPersonalInformation } from "@/lib/api/personalInformation/queries";
+import { getPersonalInformations } from "@/lib/api/personalInformation/queries";
 
 import { checkAuth } from "@/lib/auth/utils";
 
@@ -24,7 +24,7 @@ export default async function PersonalInformationPage() {
 const PersonalInformation = async () => {
   await checkAuth();
 
-  const { personalInformation } = await getPersonalInformation();
+  const { personalInformation } = await getPersonalInformations();
   
   return (
     <Suspense fallback={<Loading />}>

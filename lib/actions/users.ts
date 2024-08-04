@@ -5,7 +5,7 @@ import {
   createUser,
   deleteUser,
   updateUser,
-} from "@/lib/api/users/mutations";
+} from "@/lib/api/user/mutations";
 import {
   UserId,
   NewUserParams,

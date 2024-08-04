@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import { getUserById } from "@/lib/api/users/queries";
+import { getUserById } from "@/lib/api/user/queries";
 import OptimisticUser from "./OptimisticUser";
 
 

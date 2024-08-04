@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { type PersonalInformation, CompletePersonalInformation } from "@/lib/db/schema/personalInformation";
 import Modal from "@/components/shared/Modal";
 
-import { useOptimisticPersonalInformations } from "@/app/(app)/personal-information/useOptimisticPersonalInformations";
+import { useOptimisticPersonalInformations } from "@/app/(app)/personal-information/useOptimisticPersonalInformation";
 import { Button } from "@/components/ui/button";
 import PersonalInformationForm from "./PersonalInformationForm";
 import { PlusIcon } from "lucide-react";
