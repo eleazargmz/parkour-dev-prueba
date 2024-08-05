@@ -11,7 +11,11 @@ import { getUserAuth } from "@/lib/auth/utils";
 
 export const createPersonalInformation = async (personalInformation: NewPersonalInformationParams) => {
   const { session } = await getUserAuth();
-  const newPersonalInformation = insertPersonalInformationSchema.parse({ ...personalInformation, userId: session?.user.id! });
+  const newPersonalInformation = insertPersonalInformationSchema.parse({ 
+    ...personalInformation, 
+    phone: BigInt(personalInformation.phone), 
+    userId: session?.user.id! 
+  });
   try {
     const p = await db.personalInformation.create({ data: newPersonalInformation });
     return { personalInformation: p };

@@ -73,7 +73,7 @@ model PersonalInformation {
   id        String   @id @default(cuid())
   name      String
   ci        Int
-  phone     Int
+  phone     BigInt
   address   String
   salary    Int
   userId    String

@@ -6,6 +6,7 @@ import { Adapter } from "next-auth/adapters";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { env } from "@/lib/env.mjs";
+import { use } from "react";
 
 declare module "next-auth" {
   interface Session {
@@ -27,13 +28,22 @@ export type AuthSession = {
 
 export const authOptions: NextAuthOptions = {
   // adapter: PrismaAdapter(db) as Adapter,
-  // callbacks: {
-  //   session: ({ session, user }) => {
-  //     console.log("------------User in session callback:-----------------------", user);
-  //     session.user.id = user.id;
-  //     return session;
-  //   },
-  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.id) {
+        session.user.id = token.id as string;
+      } else {
+        console.error("Token.id is not defined");
+      }
+      return session;
+    }
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -42,22 +52,15 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        // console.log("-------credentials----------", credentials);
-
         const user = await db.user.findUnique({
           where: { email: credentials?.email },
         });
-
         if (!user) throw new Error("Correo electrónico incorrecto");
-
         const comparingPassword = await bcrypt.compare(
           credentials?.password,
           user.password
         );
-
         if (!comparingPassword) throw new Error("Contraseña incorrecta");
-       
-        // console.log("-------user----------",  user);
         return {
           id: user.id,
           name: user.name,

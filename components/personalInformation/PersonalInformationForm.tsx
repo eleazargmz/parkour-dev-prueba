@@ -1,10 +1,11 @@
 import { z } from "zod";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
+import { v4 as uuidv4 } from 'uuid';
 
 import { type Action, cn } from "@/lib/utils";
 // import { type TAddOptimistic } from "@/app/(app)/personal-information/useOptimisticPersonalInformations";
@@ -16,7 +17,7 @@ import { Label } from "@/components/ui/label";
 import { useBackPath } from "@/components/shared/BackButton";
 
 
-
+import { getUserAuth } from "@/lib/auth/utils";
 
 import { type PersonalInformation, insertPersonalInformationParams } from "@/lib/db/schema/personalInformation";
 import {
@@ -27,7 +28,7 @@ import {
 
 
 const PersonalInformationForm = ({
-  
+
   personalInformation,
   openModal,
   closeModal,
@@ -35,7 +36,7 @@ const PersonalInformationForm = ({
   postSuccess,
 }: {
   personalInformation?: PersonalInformation | null;
-  
+
   openModal?: (personalInformation?: PersonalInformation) => void;
   closeModal?: () => void;
   addOptimistic?: TAddOptimistic;
@@ -44,7 +45,7 @@ const PersonalInformationForm = ({
   const { errors, hasErrors, setErrors, handleChange } =
     useValidatedForm<PersonalInformation>(insertPersonalInformationParams);
   const editing = !!personalInformation?.id;
-  
+
   const [isDeleting, setIsDeleting] = useState(false);
   const [pending, startMutation] = useTransition();
 
@@ -72,16 +73,34 @@ const PersonalInformationForm = ({
 
   const handleSubmit = async (data: FormData) => {
     setErrors(null);
-
+    // const { session } = await getUserAuth();
+    // console.log("session ====>", session)
+    const dataPayload = Object.fromEntries(data.entries());
     const payload = Object.fromEntries(data.entries());
-    const personalInformationParsed = await insertPersonalInformationParams.safeParseAsync({  ...payload });
+  
+
+    const personalInformationParsed = await insertPersonalInformationParams.safeParseAsync({ ...payload });
     if (!personalInformationParsed.success) {
       setErrors(personalInformationParsed?.error.flatten().fieldErrors);
       return;
     }
+    console.log("personalInformationParsed= ===>", personalInformationParsed)
+    // const idPf = uuidv4();
 
     closeModal && closeModal();
+
+    // const newId = uuidv4();
+    // const payload = {
+    //   id: newId,
+    //   name: dataPayload.name,
+    //   ci: dataPayload.ci,
+    //   phone: dataPayload.phone,
+    //   address: dataPayload.address,
+    //   salary: dataPayload.salary,
+    // }
     const values = personalInformationParsed.data;
+    console.log("Valor de informacion persona - Crear ===>", values)
+    
     const pendingPersonalInformation: PersonalInformation = {
       updatedAt: personalInformation?.updatedAt ?? new Date(),
       createdAt: personalInformation?.createdAt ?? new Date(),
@@ -89,6 +108,7 @@ const PersonalInformationForm = ({
       userId: personalInformation?.userId ?? "",
       ...values,
     };
+    // console.log("pendingPersonalInformation =>", pendingPersonalInformation)
     try {
       startMutation(async () => {
         addOptimistic && addOptimistic({
@@ -99,10 +119,11 @@ const PersonalInformationForm = ({
         const error = editing
           ? await updatePersonalInformationAction({ ...values, id: personalInformation.id })
           : await createPersonalInformationAction(values);
+        console.log("Error ======>", error);
 
         const errorFormatted = {
           error: error ?? "Error",
-          values: pendingPersonalInformation 
+          values: pendingPersonalInformation
         };
         onSuccess(
           editing ? "update" : "create",
@@ -117,9 +138,9 @@ const PersonalInformationForm = ({
   };
 
   return (
-    <form action={handleSubmit} onChange={handleChange} className={"space-y-8"}>
+    <form action={handleSubmit} onChange={handleChange} className={"bg-gray-200 p-3"}>
       {/* Schema fields start */}
-              <div>
+      <div>
         <Label
           className={cn(
             "mb-2 inline-block",
@@ -140,7 +161,7 @@ const PersonalInformationForm = ({
           <div className="h-6" />
         )}
       </div>
-        <div>
+      <div>
         <Label
           className={cn(
             "mb-2 inline-block",
@@ -161,7 +182,7 @@ const PersonalInformationForm = ({
           <div className="h-6" />
         )}
       </div>
-        <div>
+      <div>
         <Label
           className={cn(
             "mb-2 inline-block",
@@ -182,7 +203,7 @@ const PersonalInformationForm = ({
           <div className="h-6" />
         )}
       </div>
-        <div>
+      <div>
         <Label
           className={cn(
             "mb-2 inline-block",
@@ -203,7 +224,7 @@ const PersonalInformationForm = ({
           <div className="h-6" />
         )}
       </div>
-        <div>
+      <div>
         <Label
           className={cn(
             "mb-2 inline-block",
@@ -274,12 +295,13 @@ const SaveButton = ({
     <Button
       type="submit"
       className="mr-2"
+      variant={"teal"}
       disabled={isCreating || isUpdating || errors}
       aria-disabled={isCreating || isUpdating || errors}
     >
       {editing
         ? `Sav${isUpdating ? "ing..." : "e"}`
-        : `Creat${isCreating ? "ing..." : "e"}`}
+        : `Agregar Registr${isCreating ? "ing..." : "o"}`}
     </Button>
   );
 };

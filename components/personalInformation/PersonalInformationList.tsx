@@ -50,8 +50,8 @@ export default function PersonalInformationList({
         />
       </Modal>
       <div className="absolute right-0 top-0 ">
-        <Button onClick={() => openModal()} variant={"outline"}>
-          +
+        <Button onClick={() => openModal()} variant={"teal"}>
+          Agregar Informacion
         </Button>
       </div>
       {optimisticPersonalInformations.length === 0 ? (
@@ -96,7 +96,11 @@ const PersonalInformation = ({
       )}
     >
       <div className="w-full">
+        <div>{personalInformation.ci}</div>
         <div>{personalInformation.name}</div>
+        <div>{personalInformation.address}</div>
+        <div>{personalInformation.phone}</div>
+        <div>{personalInformation.salary}</div>
       </div>
       <Button variant={"link"} asChild>
         <Link href={ basePath + "/" + personalInformation.id }>

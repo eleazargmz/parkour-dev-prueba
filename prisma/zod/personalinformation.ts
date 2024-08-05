@@ -5,7 +5,7 @@ export const personalInformationSchema = z.object({
   id: z.string(),
   name: z.string(),
   ci: z.number().int(),
-  phone: z.number().int(),
+  phone: z.bigint(),
   address: z.string(),
   salary: z.number().int(),
   userId: z.string(),

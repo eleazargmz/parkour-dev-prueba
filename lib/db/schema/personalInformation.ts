@@ -1,7 +1,7 @@
 import { personalInformationSchema } from "@/zodAutoGenSchemas";
 import { z } from "zod";
 import { timestamps } from "@/lib/utils";
-import { getPersonalInformation } from "@/lib/api/personalInformation/queries";
+import { getPersonalInformations } from "@/lib/api/personalInformation/queries";
 
 
 // Schema for personalInformation - used to validate API requests
@@ -35,5 +35,5 @@ export type UpdatePersonalInformationParams = z.infer<typeof updatePersonalInfor
 export type PersonalInformationId = z.infer<typeof personalInformationIdSchema>["id"];
     
 // this type infers the return from getPersonalInformation() - meaning it will include any joins
-export type CompletePersonalInformation = Awaited<ReturnType<typeof getPersonalInformation>>["personalInformation"][number];
+export type CompletePersonalInformation = Awaited<ReturnType<typeof getPersonalInformations>>["personalInformation"][number];
 
