@@ -28,7 +28,6 @@ const handleErrors = (e: unknown) => {
 const revalidateUsers = () => revalidatePath("/user");
 
 export const createUserAction = async (input: NewUserParams) => {
-  console.log("createUserAction ==>", input)
   try {
     const payload = insertUserParams.parse(input);
     await createUser(payload);

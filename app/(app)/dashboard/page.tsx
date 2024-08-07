@@ -7,11 +7,12 @@ export default async function Home() {
   return (
     <main className="space-y-4">
       {session ? (
-        <pre className="bg-secondary p-4 rounded-sm shadow-sm text-secondary-foreground break-all whitespace-break-spaces">
-          {JSON.stringify(session, null, 2)}
+        <pre className="flex items-center justify-center text-7xl text-teal-500 font-bold h-screen">
+          <h1>{`Bienvenido ${session.user.name}`}</h1>
+          
         </pre>
       ) : null}
-      <SignIn />
+      {/* <SignIn /> */}
     </main>
   );
 }

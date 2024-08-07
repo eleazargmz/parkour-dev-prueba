@@ -4,6 +4,7 @@ import SidebarItems from "./SidebarItems";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
 import { AuthSession, getUserAuth } from "@/lib/auth/utils";
+import SignIn from "./auth/SignIn";
 
 const Sidebar = async () => {
   const session = await getUserAuth();
@@ -13,10 +14,11 @@ const Sidebar = async () => {
     <aside className="h-screen min-w-52 bg-teal-500 hidden text-white md:block ps-4 pt-8 border-r shadow-inner">
       <div className="flex flex-col justify-between h-full">
         <div className="space-y-4">
-          <h3 className="text-xl text-white font-bold ml-4">Parkour.dev</h3>
+          <h3 className="text-xl text-white items-center font-bold mb-5">Parkour.dev</h3>
+          <UserDetails session={session} />
           <SidebarItems />
         </div>
-        <UserDetails session={session} />
+          <SignIn />
       </div>
     </aside>
   );
@@ -32,23 +34,23 @@ const UserDetails = ({ session }: { session: AuthSession }) => {
 
   return (
     <Link href="/account">
-      <div className="flex items-center justify-between w-full border-t border-border pt-4 px-2">
-        <div className="text-muted-foreground">
-          <p className="text-xs">{user.name ?? "John Doe"}</p>
-          <p className="text-xs font-light pr-4">
-            {user.email ?? "john@doe.com"}
-          </p>
-        </div>
-        <Avatar className="h-10 w-10">
-          <AvatarFallback className="border-border border-2 text-muted-foreground">
+      <div className="flex flex-col items-center w-full pt-4 font-bold px-2 mb-16">
+        <Avatar className="h-16 w-16 mb-2">
+          <AvatarFallback className="border-border border-4 font-bold text-lg text-muted-foreground">
             {user.name
               ? user.name
-                  ?.split(" ")
-                  .map((word) => word[0].toUpperCase())
-                  .join("")
+                ?.split(" ")
+                .map((word) => word[0].toUpperCase())
+                .join("")
               : "~"}
           </AvatarFallback>
         </Avatar>
+        <div className="text-center text-muted-foreground">
+          <p className="text-lg">{user.name ?? "John Doe"}</p>
+          <p className="text-sm font-light">
+            {user.email ?? "john@doe.com"}
+          </p>
+        </div>
       </div>
     </Link>
   );

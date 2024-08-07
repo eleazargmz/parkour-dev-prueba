@@ -72,8 +72,8 @@ model VerificationToken {
 model PersonalInformation {
   id        String   @id @default(cuid())
   name      String
-  ci        Int
-  phone     BigInt
+  ci        String
+  phone     String
   address   String
   salary    Int
   userId    String

@@ -19,7 +19,7 @@ export default function Modal({
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogContent>
-        <DialogHeader className="px-5 pt-5">
+        <DialogHeader className="flex justify-center items-center px-5 pt-5">
           <DialogTitle>{title ?? "Modal"}</DialogTitle>
         </DialogHeader>
         <div className="px-5 pb-5">{children}</div>

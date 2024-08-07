@@ -13,7 +13,7 @@ export const createPersonalInformation = async (personalInformation: NewPersonal
   const { session } = await getUserAuth();
   const newPersonalInformation = insertPersonalInformationSchema.parse({ 
     ...personalInformation, 
-    phone: BigInt(personalInformation.phone), 
+    phone: personalInformation.phone,
     userId: session?.user.id! 
   });
   try {

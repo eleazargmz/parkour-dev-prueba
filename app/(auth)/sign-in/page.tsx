@@ -20,7 +20,6 @@ const LoginPage = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log("------handleSubmit------", data)
     const res = await signIn("credentials", {
       email: data.email,
       password: data.password,
@@ -38,8 +37,6 @@ const LoginPage = () => {
     }
   };
 
-  console.log(errors);
-
   return (
     <div className="flex items-center justify-center p-40 bg-gray-200">
       <form
@@ -55,7 +52,7 @@ const LoginPage = () => {
           {...register("email", {
             required: {
               value: true,
-              message: "Email is required",
+              message: "Correo electronico es requerido",
             },
           })}
           className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
@@ -69,7 +66,7 @@ const LoginPage = () => {
           {...register("password", {
             required: {
               value: true,
-              message: "Password is required",
+              message: "Contraseña es requerido",
             },
           })}
           className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"

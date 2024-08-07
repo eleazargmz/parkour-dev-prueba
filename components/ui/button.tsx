@@ -19,6 +19,8 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         teal: "w-full p-2 mt-3 text-white bg-teal-500 rounded hover:bg-teal-600 font-bold",
+        teal2: "w-28 my-3 p-2 text-white bg-teal-500 rounded hover:bg-teal-600 font-bold",
+        signOut: "p-2 px-3 text-white bg-teal-500 rounded hover:bg-gray-50 hover:text-teal-500 font-bold mr-1 text-lg",
       },
       size: {
         default: "h-10 px-4 py-2",

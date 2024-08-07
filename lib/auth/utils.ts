@@ -57,7 +57,7 @@ export const authOptions: NextAuthOptions = {
         });
         if (!user) throw new Error("Correo electrónico incorrecto");
         const comparingPassword = await bcrypt.compare(
-          credentials?.password,
+          credentials?.password ?? "",
           user.password
         );
         if (!comparingPassword) throw new Error("Contraseña incorrecta");

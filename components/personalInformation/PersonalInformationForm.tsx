@@ -72,35 +72,22 @@ const PersonalInformationForm = ({
   };
 
   const handleSubmit = async (data: FormData) => {
-    setErrors(null);
+    // setErrors(null);
     // const { session } = await getUserAuth();
-    // console.log("session ====>", session)
     const dataPayload = Object.fromEntries(data.entries());
     const payload = Object.fromEntries(data.entries());
-  
+
 
     const personalInformationParsed = await insertPersonalInformationParams.safeParseAsync({ ...payload });
     if (!personalInformationParsed.success) {
       setErrors(personalInformationParsed?.error.flatten().fieldErrors);
       return;
     }
-    console.log("personalInformationParsed= ===>", personalInformationParsed)
-    // const idPf = uuidv4();
 
     closeModal && closeModal();
 
-    // const newId = uuidv4();
-    // const payload = {
-    //   id: newId,
-    //   name: dataPayload.name,
-    //   ci: dataPayload.ci,
-    //   phone: dataPayload.phone,
-    //   address: dataPayload.address,
-    //   salary: dataPayload.salary,
-    // }
     const values = personalInformationParsed.data;
-    console.log("Valor de informacion persona - Crear ===>", values)
-    
+
     const pendingPersonalInformation: PersonalInformation = {
       updatedAt: personalInformation?.updatedAt ?? new Date(),
       createdAt: personalInformation?.createdAt ?? new Date(),
@@ -108,7 +95,6 @@ const PersonalInformationForm = ({
       userId: personalInformation?.userId ?? "",
       ...values,
     };
-    // console.log("pendingPersonalInformation =>", pendingPersonalInformation)
     try {
       startMutation(async () => {
         addOptimistic && addOptimistic({
@@ -119,7 +105,6 @@ const PersonalInformationForm = ({
         const error = editing
           ? await updatePersonalInformationAction({ ...values, id: personalInformation.id })
           : await createPersonalInformationAction(values);
-        console.log("Error ======>", error);
 
         const errorFormatted = {
           error: error ?? "Error",
@@ -136,116 +121,86 @@ const PersonalInformationForm = ({
       }
     }
   };
-
   return (
-    <form action={handleSubmit} onChange={handleChange} className={"bg-gray-200 p-3"}>
+    <form action={handleSubmit} onChange={handleChange} className={"bg-gray-50 p-6 rounded-lg"}>
       {/* Schema fields start */}
-      <div>
-        <Label
-          className={cn(
-            "mb-2 inline-block",
-            errors?.name ? "text-destructive" : "",
+      <div className="grid grid-cols-2 gap-4">
+        {/* Name Input */}
+        <div>
+          <Input
+            type="text"
+            name="name"
+            placeholder="Nombre"
+            className={cn(errors?.name ? "ring ring-destructive" : "")}
+            defaultValue={personalInformation?.name ?? ""}
+          />
+          {errors?.name ? (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
+          ) : (
+            <div className="h-6" />
           )}
-        >
-          Name
-        </Label>
-        <Input
-          type="text"
-          name="name"
-          className={cn(errors?.name ? "ring ring-destructive" : "")}
-          defaultValue={personalInformation?.name ?? ""}
-        />
-        {errors?.name ? (
-          <p className="text-xs text-destructive mt-2">{errors.name[0]}</p>
-        ) : (
-          <div className="h-6" />
-        )}
+        </div>
+        <div>
+          <Input
+            type="text"
+            name="ci"
+            placeholder="Cédula"
+            className={cn(errors?.ci ? "ring ring-destructive" : "")}
+            defaultValue={personalInformation?.ci ?? ""}
+          />
+          {errors?.ci ? (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.ci}</p>
+          ) : (
+            <div className="h-6" />
+          )}
+        </div>
       </div>
-      <div>
-        <Label
-          className={cn(
-            "mb-2 inline-block",
-            errors?.ci ? "text-destructive" : "",
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <Input
+            type="text"
+            name="phone"
+            placeholder="Teléfono"
+            className={cn(errors?.phone ? "ring ring-destructive" : "")}
+            defaultValue={personalInformation?.phone ?? ""}
+          />
+          {errors?.phone ? (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.phone}</p>
+          ) : (
+            <div className="h-6" />
           )}
-        >
-          Ci
-        </Label>
-        <Input
-          type="text"
-          name="ci"
-          className={cn(errors?.ci ? "ring ring-destructive" : "")}
-          defaultValue={personalInformation?.ci ?? ""}
-        />
-        {errors?.ci ? (
-          <p className="text-xs text-destructive mt-2">{errors.ci[0]}</p>
-        ) : (
-          <div className="h-6" />
-        )}
+        </div>
+        <div>
+          <Input
+            type="text"
+            name="salary"
+            placeholder="Salario"
+            className={cn(errors?.salary ? "ring ring-destructive" : "")}
+            defaultValue={personalInformation?.salary ?? ""}
+          />
+          {errors?.salary ? (
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors?.salary}</p>
+
+          ) : (
+            <div className="h-6" />
+          )}
+
+        </div>
       </div>
-      <div>
-        <Label
-          className={cn(
-            "mb-2 inline-block",
-            errors?.phone ? "text-destructive" : "",
-          )}
-        >
-          Phone
-        </Label>
-        <Input
-          type="text"
-          name="phone"
-          className={cn(errors?.phone ? "ring ring-destructive" : "")}
-          defaultValue={personalInformation?.phone ?? ""}
-        />
-        {errors?.phone ? (
-          <p className="text-xs text-destructive mt-2">{errors.phone[0]}</p>
-        ) : (
-          <div className="h-6" />
-        )}
-      </div>
-      <div>
-        <Label
-          className={cn(
-            "mb-2 inline-block",
-            errors?.address ? "text-destructive" : "",
-          )}
-        >
-          Address
-        </Label>
+      <div className="">
         <Input
           type="text"
           name="address"
+          placeholder="Dirección"
           className={cn(errors?.address ? "ring ring-destructive" : "")}
           defaultValue={personalInformation?.address ?? ""}
         />
         {errors?.address ? (
-          <p className="text-xs text-destructive mt-2">{errors.address[0]}</p>
+          <p className="text-xs text-destructive text-red-500 mt-2 mb-2">{errors.address}</p>
         ) : (
           <div className="h-6" />
         )}
       </div>
-      <div>
-        <Label
-          className={cn(
-            "mb-2 inline-block",
-            errors?.salary ? "text-destructive" : "",
-          )}
-        >
-          Salary
-        </Label>
-        <Input
-          type="text"
-          name="salary"
-          className={cn(errors?.salary ? "ring ring-destructive" : "")}
-          defaultValue={personalInformation?.salary ?? ""}
-        />
-        {errors?.salary ? (
-          <p className="text-xs text-destructive mt-2">{errors.salary[0]}</p>
-        ) : (
-          <div className="h-6" />
-        )}
-      </div>
-      {/* Schema fields end */}
 
       {/* Save Button */}
       <SaveButton errors={hasErrors} editing={editing} />

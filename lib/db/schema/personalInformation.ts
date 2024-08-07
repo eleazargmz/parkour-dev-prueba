@@ -9,8 +9,8 @@ const baseSchema = personalInformationSchema.omit(timestamps)
 
 export const insertPersonalInformationSchema = baseSchema.omit({ id: true });
 export const insertPersonalInformationParams = baseSchema.extend({
-  ci: z.coerce.number(),
-  phone: z.coerce.number(),
+  ci: z.string(),
+  phone: z.string(),
   salary: z.coerce.number()
 }).omit({ 
   id: true,
@@ -19,8 +19,8 @@ export const insertPersonalInformationParams = baseSchema.extend({
 
 export const updatePersonalInformationSchema = baseSchema;
 export const updatePersonalInformationParams = updatePersonalInformationSchema.extend({
-  ci: z.coerce.number(),
-  phone: z.coerce.number(),
+  ci: z.string(),
+  phone: z.string(),
   salary: z.coerce.number()
 }).omit({ 
   userId: true

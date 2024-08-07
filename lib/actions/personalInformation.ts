@@ -28,10 +28,8 @@ const handleErrors = (e: unknown) => {
 const revalidatePersonalInformations = () => revalidatePath("/personal-information");
 
 export const createPersonalInformationAction = async (input: NewPersonalInformationParams) => {
-  console.log("createPersonalInformationAction ===> ", input)
   try {
     const payload = insertPersonalInformationParams.parse(input);
-    console.log("payload ======> ", payload)
     await createPersonalInformation(payload);
     revalidatePersonalInformations();
   } catch (e) {

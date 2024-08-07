@@ -1,64 +1,63 @@
-import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-import {db} from "@/lib/db";
+// import { NextResponse } from "next/server";
+// import bcrypt from "bcrypt";
+// import {db} from "@/lib/db";
 
-export async function POST(request) {
-  try {
-    const data = await request.json();
+// export async function POST(request) {
+//   try {
+//     const data = await request.json();
 
-    const userFound = await db.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+//     const userFound = await db.user.findUnique({
+//       where: {
+//         email: data.email,
+//       },
+//     });
 
-    if (userFound) {
-      return NextResponse.json(
-        {
-          message: "Email already exists",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
+//     if (userFound) {
+//       return NextResponse.json(
+//         {
+//           message: "Email already exists",
+//         },
+//         {
+//           status: 400,
+//         }
+//       );
+//     }
 
-    const userNameFound = await db.user.findUnique({
-      where: {
-        username: data.username,
-      },
-    });
+//     const userNameFound = await db.user.findUnique({
+//       where: {
+//         username: data.username,
+//       },
+//     });
 
-    if (userNameFound) {
-      return NextResponse.json(
-        {
-          message: "Username already exists",
-        },
-        {
-          status: 400,
-        }
-      );
-    }
+//     if (userNameFound) {
+//       return NextResponse.json(
+//         {
+//           message: "Username already exists",
+//         },
+//         {
+//           status: 400,
+//         }
+//       );
+//     }
 
-    const hashedPassword = await bcrypt.hash(data.password, 10);
+//     const hashedPassword = await bcrypt.hash(data.password, 10);
 
-    const newUser = await db.user.create({
-      data: {
-        username: data.username,
-        email: data.email,
-        password: hashedPassword,
-      },
-    });
+//     const newUser = await db.user.create({
+//       data: {
+//         username: data.username,
+//         email: data.email,
+//         password: hashedPassword,
+//       },
+//     });
 
-    // console.log("NewUser ==>", newUser);
-    const { password: _, ...user } = newUser;
+//     const { password: _, ...user } = newUser;
 
-    return NextResponse.json(user);
-  } catch (error) {
-    return NextResponse.json({
-      message: error.message
-    }, {
-      status: 500
-    })
-  }
-}
+//     return NextResponse.json(user);
+//   } catch (error) {
+//     return NextResponse.json({
+//       message: error.message
+//     }, {
+//       status: 500
+//     })
+//   }
+// }

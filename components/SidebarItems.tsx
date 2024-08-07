@@ -46,7 +46,7 @@ const SidebarLinkGroup = ({
   const pathname = "/" + fullPathname.split("/")[1];
 
   return (
-    <div className={border ? "border-border border-t my-8 pt-4" : ""}>
+    <div className={border ? "border-border my-8 pt-4" : ""}>
       {title ? (
         <h4 className="px-2 mb-2 text-sm font-bold uppercase text-muted-foreground tracking-wider">
           {title}

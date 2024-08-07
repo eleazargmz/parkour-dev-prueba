@@ -8,26 +8,30 @@ type AdditionalLinks = {
 
 export const defaultLinks: SidebarLink[] = [
   { href: "/dashboard", title: "Home", icon: HomeIcon },
-  { href: "/account", title: "Account", icon: User },
+  {
+    href: "/personal-information",
+    title: "Personal Information",
+    icon: NotebookPen,
+  },
   { href: "/settings", title: "Settings", icon: Cog },
 ];
 
 export const additionalLinks: AdditionalLinks[] = [
-  {
-    title: "Entities",
-    links: [
-      {
-        href: "/users",
-        title: "Users",
-        icon: UserPen,
-      },
-      {
-        href: "/personal-information",
-        title: "Personal Information",
-        icon: NotebookPen,
-      },
-    ],
-  },
-
+  // {
+  //   title: "Entities",
+  //   links: [
+  //     {
+  //       href: "/users",
+  //       title: "Users",
+  //       icon: UserPen,
+  //     },
+  //     {
+  //       href: "/personal-information",
+  //       title: "Personal Information",
+  //       icon: NotebookPen,
+  //     },
+  //     { href: "/account", title: "Account", icon: User },
+    
+  //   ],
+  // },
 ];
-
