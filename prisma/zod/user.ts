@@ -5,10 +5,8 @@ export const userSchema = z.object({
   id: z.string(),
   name: z.string().min(1, {message: "El nombre es obligatorio"}),
   email: z.string().email({ message: "Dirección de correo electrónico no válida" }),
-  emailVerified: z.date().nullish(),
   password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
-  confirmPassword: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
-  image: z.string().nullish(),
+  confirmPassword: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }).optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
 })

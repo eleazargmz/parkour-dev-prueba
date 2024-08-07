@@ -73,11 +73,18 @@ export function DataTable<TData, TValue>({
     },
   })
 
+  const handleSelectChange = (value: string) => {
+    if (table.getColumn(currentStatus)) {
+      table.getColumn(currentStatus)?.setFilterValue('');
+    }
+    setCurrentStatus(value);
+  };
+
   const placeholderText = placeholders[currentStatus] ?? "Buscar...";
-  
+
   return (
     <div>
-       <div className="flex items-center justify-center py-4">
+      <div className="flex items-center justify-center py-4">
         <Input
           placeholder={`Filtrar ${placeholderText}...`}
           value={(table.getColumn(currentStatus)?.getFilterValue() as string) ?? ""}
@@ -85,21 +92,21 @@ export function DataTable<TData, TValue>({
             table.getColumn(currentStatus)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
-          disabled={!currentStatus} // Deshabilitar el input si currentStatus está vacío
+          disabled={!currentStatus}
         />
         <Select
           value={currentStatus}
-          onValueChange={(value) => setCurrentStatus(value)}
+          onValueChange={handleSelectChange}
         >
           <SelectTrigger className="w-[180px] bg-teal-500 border-teal-500 rounded text-white font-bold">
             <SelectValue placeholder={`Buscar por ${currentStatus}...`} />
           </SelectTrigger>
           <SelectContent className="w-[180px] bg-gray-50">
             <SelectGroup>
-              <SelectItem value="ci">Cedula</SelectItem>
+              <SelectItem value="ci">Cédula</SelectItem>
               <SelectItem value="name">Nombre</SelectItem>
-              <SelectItem value="address">Direccion</SelectItem>
-              <SelectItem value="phone">Telefono</SelectItem>
+              <SelectItem value="address">Dirección</SelectItem>
+              <SelectItem value="phone">Teléfono</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -155,7 +162,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
-            Previous
+            Anterior
           </Button>
           <Button
             variant="teal2"
@@ -163,7 +170,7 @@ export function DataTable<TData, TValue>({
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
-            Next
+            Siguiente
           </Button>
         </div>
       </div>

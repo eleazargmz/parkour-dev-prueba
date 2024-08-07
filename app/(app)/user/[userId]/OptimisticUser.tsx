@@ -1,7 +1,7 @@
 "use client";
 
 import { useOptimistic, useState } from "react";
-import { TAddOptimistic } from "@/app/(app)/user/useOptimisticUser";
+import { TAddOptimistic } from "@/app/(app)/user/useOptimisticUsers";
 import { type User } from "@/lib/db/schema/user";
 import { cn } from "@/lib/utils";
 

@@ -47,13 +47,13 @@ export default function PersonalInformationList({
           personalInformation={activePersonalInformation}
           addOptimistic={addOptimisticPersonalInformation}
           openModal={openModal}
-          // closeModal={closeModal}
+        // closeModal={closeModal}
 
         />
       </Modal>
       <div className="absolute right-0 top-0 ">
         <Button onClick={() => openModal()} variant={"teal"}>
-          Agregar Informacion
+          Agregar Información
         </Button>
       </div>
       {optimisticPersonalInformations.length === 0 ? (
@@ -269,25 +269,9 @@ const PersonalInformation = ({
     <>
       <div className="w-full mt-5 p-4 bg-gray-50 rounded-xl">
         <div className="w-full rounded-xl">
-          <DataTable columns={columns} data={newPersonalInformation } />
+          <DataTable columns={columns} data={newPersonalInformation} />
         </div>
       </div>
-      {/* <li
-      className={cn(
-        "flex justify-between my-2",
-        mutating ? "opacity-30 animate-pulse" : "",
-        deleting ? "text-destructive" : "",
-      )}
-    >
-      <div className="w-full">
-      <DataTable columns={columns} data={personalInformation} />
-      </div>
-      <Button variant={"link"} asChild>
-        <Link href={ basePath + "/" + personalInformation.id }>
-          Edit
-        </Link>
-      </Button>
-    </li> */}
     </>
   );
 };

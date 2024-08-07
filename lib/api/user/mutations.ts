@@ -2,13 +2,15 @@ import { db } from "@/lib/db/index";
 import bcrypt from "bcrypt";
 
 import { 
-  UserId, 
+  UserId,
   NewUserParams,
-  UpdateUserParams, 
+  UpdateUserParams,
+  userIdSchema,
+  insertUserSchema,
   updateUserSchema,
-  insertUserSchema, 
-  userIdSchema 
-} from "@/lib/db/schema/user";
+  insertUserParams,
+  updateUserParams, } from "@/schemas/customUserSchema"
+
 
 export const createUser = async (user: NewUserParams) => {
   const newUser = insertUserSchema.parse(user);

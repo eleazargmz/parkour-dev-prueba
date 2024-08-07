@@ -44,7 +44,7 @@ const LoginPage = () => {
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="w-full m-auto mb-4 text-2xl text-teal-600 font-bold text-center">
-          Login
+          Iniciar sesión
         </h1>
         {error && <span className="text-sm text-red-500">{error}</span>}
         <input
@@ -52,11 +52,11 @@ const LoginPage = () => {
           {...register("email", {
             required: {
               value: true,
-              message: "Correo electronico es requerido",
+              message: "Correo electrónico es requerido",
             },
           })}
           className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-          placeholder="Email"
+          placeholder="Correo electrónico"
         />
         {errors.email && (
           <span className="text-sm text-red-500">{errors.email.message}</span>
@@ -66,11 +66,11 @@ const LoginPage = () => {
           {...register("password", {
             required: {
               value: true,
-              message: "Contraseña es requerido",
+              message: "Contraseña es requerida",
             },
           })}
           className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-          placeholder="Password"
+          placeholder="Contraseña"
         />
         {errors.password && (
           <span className="text-sm text-red-500">
@@ -78,13 +78,13 @@ const LoginPage = () => {
           </span>
         )}
         <button className="w-full p-2 mt-3 text-white bg-teal-500  rounded hover:bg-teal-600 font-bold">
-          Login
+          Iniciar sesión
         </button>
         <Link 
           href="/sign-up"
           className="flex justify-center items-center mt-3 text-center text-teal-600"
         >
-          Register
+          Registrarse
         </Link>
       </form>
     </div>

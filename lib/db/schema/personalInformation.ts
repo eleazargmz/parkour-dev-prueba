@@ -1,11 +1,12 @@
-import { personalInformationSchema } from "@/zodAutoGenSchemas";
+// import { personalInformationSchema } from "@/zodAutoGenSchemas";
 import { z } from "zod";
 import { timestamps } from "@/lib/utils";
 import { getPersonalInformations } from "@/lib/api/personalInformation/queries";
+import { customPersonalInformationSchema } from "@/schemas/customPersonalInformationSchema ";
 
 
 // Schema for personalInformation - used to validate API requests
-const baseSchema = personalInformationSchema.omit(timestamps)
+const baseSchema = customPersonalInformationSchema.omit(timestamps)
 
 export const insertPersonalInformationSchema = baseSchema.omit({ id: true });
 export const insertPersonalInformationParams = baseSchema.extend({
@@ -28,7 +29,7 @@ export const updatePersonalInformationParams = updatePersonalInformationSchema.e
 export const personalInformationIdSchema = baseSchema.pick({ id: true });
 
 // Types for personalInformation - used to type API request params and within Components
-export type PersonalInformation = z.infer<typeof personalInformationSchema>;
+export type PersonalInformation = z.infer<typeof customPersonalInformationSchema>;
 export type NewPersonalInformation = z.infer<typeof insertPersonalInformationSchema>;
 export type NewPersonalInformationParams = z.infer<typeof insertPersonalInformationParams>;
 export type UpdatePersonalInformationParams = z.infer<typeof updatePersonalInformationParams>;

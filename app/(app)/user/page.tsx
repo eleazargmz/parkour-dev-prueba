@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import Loading from "@/app/loading";
 import UserList from "@/components/user/UserList";
-import { getUser } from "@/lib/api/user/queries";
+import { getUsers } from "@/lib/api/user/queries";
 
 
 export const revalidate = 0;
@@ -22,7 +22,7 @@ export default async function UserPage() {
 
 const User = async () => {
   
-  const { user } = await getUser();
+  const { user } = await getUsers();
   
   return (
     <Suspense fallback={<Loading />}>

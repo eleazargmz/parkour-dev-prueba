@@ -6,14 +6,22 @@ import {
   deleteUser,
   updateUser,
 } from "@/lib/api/user/mutations";
-import {
+// import {
+//   UserId,
+//   NewUserParams,
+//   UpdateUserParams,
+//   userIdSchema,
+//   insertUserParams,
+//   updateUserParams,
+// } from "@/lib/db/schema/user";
+import { 
   UserId,
   NewUserParams,
   UpdateUserParams,
   userIdSchema,
   insertUserParams,
-  updateUserParams,
-} from "@/lib/db/schema/user";
+  updateUserParams, } from "@/schemas/customUserSchema"
+
 
 const handleErrors = (e: unknown) => {
   const errMsg = "Error, please try again.";

@@ -13,7 +13,7 @@ export default async function PersonalInformationPage() {
     <main>
       <div className="relative">
         <div className="flex justify-between">
-          <h1 className="font-semibold text-2xl my-2">Personal Information</h1>
+          <h1 className="font-semibold text-2xl my-2">Información Personal</h1>
         </div>
         <PersonalInformation />
       </div>

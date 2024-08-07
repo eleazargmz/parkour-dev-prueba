@@ -17,7 +17,7 @@ export default function SignIn() {
         </p> */}
         <Button variant={"signOut"} onClick={() => signOut({ callbackUrl: "/" })}>
           <LogOut className=" mr-1"/>
-          Sign out
+          Cerrar sesión
         </Button>
       </div>
     );

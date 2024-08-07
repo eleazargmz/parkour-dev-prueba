@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 
 import { type Action, cn } from "@/lib/utils";
-import { type TAddOptimistic } from "@/app/(app)/user/useOptimisticUser";
+import { type TAddOptimistic } from "@/app/(app)/user/useOptimisticUsers";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,8 @@ import { useBackPath } from "@/components/shared/BackButton";
 
 
 
-import { type User, insertUserParams } from "@/lib/db/schema/user";
+// import { type User, insertUserParams } from "@/lib/db/schema/user";
+import { type UserSchema, insertUserParams } from "@/schemas/customUserSchema"
 import {
   createUserAction,
   deleteUserAction,
@@ -33,15 +34,15 @@ const UserForm = ({
   addOptimistic,
   postSuccess,
 }: {
-  user?: User | null;
+  user?: UserSchema | null;
 
-  openModal?: (user?: User) => void;
+  openModal?: (user?: UserSchema) => void;
   closeModal?: () => void;
   addOptimistic?: TAddOptimistic;
   postSuccess?: () => void;
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
-    useValidatedForm<User>(insertUserParams);
+    useValidatedForm<UserSchema>(insertUserParams);
   const editing = !!user?.id;
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -54,7 +55,7 @@ const UserForm = ({
 
   const onSuccess = (
     action: Action,
-    data?: { error: string; values: User },
+    data?: { error: string; values: UserSchema },
   ) => {
     const failed = Boolean(data?.error);
     if (failed) {
@@ -74,7 +75,7 @@ const UserForm = ({
     setErrors(null);
     const payload = Object.fromEntries(data.entries());
 
-  
+
     if (payload.password !== payload.confirmPassword) {
       setError("Las contraseñas no coinciden")
       setTimeout(() => {
@@ -92,7 +93,7 @@ const UserForm = ({
 
     closeModal && closeModal();
     const values = userParsed.data;
-    const pendingUser: User = {
+    const pendingUser: UserSchema = {
       updatedAt: user?.updatedAt ?? new Date(),
       createdAt: user?.createdAt ?? new Date(),
       id: user?.id ?? "",
@@ -142,7 +143,7 @@ const UserForm = ({
           <Input
             type="text"
             name="name"
-            placeholder="Username"
+            placeholder="Nombre de usuario"
             className={cn(errors?.name ? "ring ring-destructive" : "")}
           />
           {errors?.name && (
@@ -151,7 +152,7 @@ const UserForm = ({
           <Input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Correo electrónico"
             className={cn(errors?.email ? "ring ring-destructive" : "")}
           />
           {errors?.email && (
@@ -160,7 +161,7 @@ const UserForm = ({
           <Input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             className={cn(errors?.password ? "ring ring-destructive" : "")}
           />
           {errors?.password && (
@@ -169,7 +170,7 @@ const UserForm = ({
           <Input
             type="password"
             name="confirmPassword"
-            placeholder="Confirm Password"
+            placeholder="Confirmar contraseña"
             className={cn(errors?.password ? "ring ring-destructive" : "")}
             defaultValue={user?.password ?? ""}
           />
@@ -185,7 +186,7 @@ const UserForm = ({
           href="/sign-in"
           className=" flex justify-center items-center mt-3 text-center text-teal-600"
         >
-          Login
+          Iniciar sesión
         </Link>
 
         {/* Delete Button */}
@@ -210,7 +211,7 @@ const UserForm = ({
               });
             }}
           >
-            Delet{isDeleting ? "ing..." : "e"}
+            Eliminar{isDeleting ? "..." : ""}
           </Button>
         ) : null}
       </form>
