@@ -1,44 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Guía para Configurar y Ejecutar un Proyecto Next.js con Prisma
 
-## Getting Started
+## Paso 1: Instalar y Configurar PostgreSQL
 
-First, run the development server:
+**1. Instalar PostgreSQL**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Con este comando se descargará e instalará PostgreSQL en su última versión:
+sudo apt-get -y install postgresql postgresql-contrib
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ingrese a PostgreSQL con el siguiente comando:
+sudo su - postgres
+psql
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Crea el usuario y la contraseña para administrar bases de datos con PostgreSQL:
+create user eleazarparkour with password '123456';
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Dar permisos de super usuario a eleazarparkour:
+alter user eleazarparkour with superuser;
 
-## Learn More
+Crear tu primer base de datos con PostgreSQL.
+Podemos crear nuestro primer base de datos con el siguiente comando para el usuario eleazarparkour:
+create database login_next_db owner eleazarparkour;
 
-To learn more about Next.js, take a look at the following resources:
+Listar base de datos:
+\l
+\list
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para salir:
+exit
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Instalar PgAdmin**
 
-## Deploy on Vercel
+Para instalar PgAdmin nesecitaremos `curl` y lo podemos instalar con el siguiente comando:
+sudo apt install curl
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Instale la clave pública para el repositorio (si no lo hizo previamente):
+sudo curl https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo apt-key add
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Cree el archivo de configuración del repositorio:
+sudo sh -c 'echo "deb https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
 
 
-# Guía para Configurar y Ejecutar un Proyecto Next.js con Prisma en Ubuntu
+Instalar pgAdmin, instalar para los modos de escritorio :
+sudo apt install pgadmin4
 
-## Paso 1: Clonar el Repositorio
+## Paso 2: Clonar el Repositorio
 
 Abre una terminal.
 
@@ -48,13 +53,16 @@ git clone <URL_DEL_REPOSITORIO>
 Navega al directorio del proyecto clonado:
 cd <NOMBRE_DEL_DIRECTORIO_DEL_PROYECTO>
 
-## Paso 2: Instalar Dependencias
+## Paso 3: Instalar Dependencias
 Ejecuta el siguiente comando para instalar todas las dependencias necesarias del proyecto:
-npm install --legacy-peer-deps
+npm install --force
 
-## Paso 3: Configurar Prisma
+## Paso 4: Configurar Prisma
 Asegúrate de que el archivo .env esté presente en la raíz del proyecto. Si no existe, créalo y añade la configuración de la base de datos:
 DATABASE_URL="postgresql://user:password@localhost:5432/mydb"
+
+El NEXTAUTH_SECRET es una clave de seguridad utilizada por NextAuth.js para cifrar y firmar los tokens de sesión Para generar un valor seguro y aleatorio para NEXTAUTH_SECRET, ejecuta el siguiente comando en la terminal:
+openssl rand -base64 32
 
 Genera los clientes de Prisma ejecutando:
 npm run db:generate
@@ -62,10 +70,35 @@ npm run db:generate
 Ejecuta las migraciones para actualizar la base de datos con el esquema definido:
 npm run db:migrate
 
-## Paso 4: Generar Cliente de Prisma (si es necesario)
-Si no usaste npm run db:generate en el paso anterior, puedes generar el cliente de Prisma directamente con:
-npx prisma generate
-
 ## Paso 5: Iniciar el Servidor de Desarrollo
 Inicia el servidor de desarrollo de Next.js:
 npm run dev
+
+# ______________________________________________________________________________________________________________________
+
+# Descripción del Proyecto
+
+Desarrollé una aplicación web utilizando Kirimase, una herramienta de línea de comandos (CLI) diseñada para acelerar el desarrollo con Next.js. Esta aplicación, construida con Next.js 14 y React, permite a los usuarios autenticarse, ingresar y visualizar información personal en una lista.
+
+## Autenticación de Usuarios
+
+Implementé la autenticación de usuarios con NextAuth, utilizando el proveedor de credenciales para permitir el inicio de sesión mediante correo electrónico y contraseña. Las contraseñas se cifran con bcrypt antes de ser almacenadas en la base de datos PostgreSQL, asegurando la protección de la información del usuario.
+
+## Estilo y Diseño
+
+Modifiqué los estilos del menú superior, menú lateral, botones, iconos y avatar para mejorar la apariencia de la interfaz de usuario.
+
+## Visualización de Información
+
+Para la presentación de información personal, utilicé el componente Data Table de Shadcn junto con Tailwind CSS. La tabla permite a los usuarios autenticados ver y gestionar su información personal, organizada por criterios como nombre, cédula, dirección, teléfono y salario. Implementé funcionalidades de búsqueda y filtrado para mejorar la usabilidad:
+
+- **Ordenamiento**: Los datos pueden ordenarse haciendo clic en los encabezados de las columnas.
+- **Filtrado**: Añadí un filtro de búsqueda dinámico que se actualiza según el criterio seleccionado, permitiendo a los usuarios buscar por nombre, cédula, dirección, teléfono y salario.
+
+## Validación de Formularios
+
+Desarrollé formularios para inicio de sesión, registro y creación de información personal, utilizando herramientas de validación modernas para asegurar una experiencia de usuario fluida:
+
+- **Registro**: Utilicé Zod para validar campos como nombre, correo electrónico y contraseñas, asegurando que las contraseñas coincidan antes del envío.
+- **Inicio de Sesión**: Utilicé react-hook-form para gestionar validaciones y estados, mostrando errores en tiempo real y manejando errores del servidor con mensajes claros.
+- **Creación de Información Personal**: El formulario utiliza Zod para garantizar la validación efectiva de campos como nombre, cédula, teléfono, salario y dirección, con validaciones específicas para cada uno.
