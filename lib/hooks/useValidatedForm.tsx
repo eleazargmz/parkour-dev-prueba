@@ -20,8 +20,12 @@ export function useValidatedForm<Entity>(insertEntityZodSchema: ZodSchema) {
     ) {
       if (!(target instanceof HTMLInputElement && target.type === "submit")) {
         const field = target.name as keyof Entity;
+        let value: any = target.value;
+        if (field === 'salary') {
+          value = +value;
+        }
         const result = insertEntityZodSchema.safeParse({
-          [field]: target.value,
+          [field]: value,
         });
         const fieldError = result.success
           ? undefined

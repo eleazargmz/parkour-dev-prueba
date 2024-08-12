@@ -18,6 +18,11 @@ export const insertPersonalInformationParams = baseSchema.extend({
   userId: true
 });
 
+export const newInsertPersonalInformationParams = baseSchema.omit({ 
+  id: true,
+  userId: true
+});
+
 export const updatePersonalInformationSchema = baseSchema;
 export const updatePersonalInformationParams = updatePersonalInformationSchema.extend({
   ci: z.string(),

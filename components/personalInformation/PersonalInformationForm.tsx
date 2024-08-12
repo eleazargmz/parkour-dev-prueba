@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, ChangeEvent, useState, useTransition } from "react";
 import { useFormStatus } from "react-dom";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -19,7 +19,7 @@ import { useBackPath } from "@/components/shared/BackButton";
 
 import { getUserAuth } from "@/lib/auth/utils";
 
-import { type PersonalInformation, insertPersonalInformationParams } from "@/lib/db/schema/personalInformation";
+import { type PersonalInformation, newInsertPersonalInformationParams } from "@/lib/db/schema/personalInformation";
 import {
   createPersonalInformationAction,
   deletePersonalInformationAction,
@@ -43,7 +43,7 @@ const PersonalInformationForm = ({
   postSuccess?: () => void;
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
-    useValidatedForm<PersonalInformation>(insertPersonalInformationParams);
+    useValidatedForm<PersonalInformation>(newInsertPersonalInformationParams);
   const editing = !!personalInformation?.id;
 
   const [isDeleting, setIsDeleting] = useState(false);
@@ -71,14 +71,19 @@ const PersonalInformationForm = ({
     }
   };
 
+
   const handleSubmit = async (data: FormData) => {
-    // setErrors(null);
-    // const { session } = await getUserAuth();
-    const dataPayload = Object.fromEntries(data.entries());
-    const payload = Object.fromEntries(data.entries());
+    let payload: Record<string, any> = {};
 
+    data.forEach((value, key) => {
+      if (key === 'salary') {
+        payload[key] = Number(value);
+      } else {
+        payload[key] = value;
+      }
+    });
 
-    const personalInformationParsed = await insertPersonalInformationParams.safeParseAsync({ ...payload });
+    const personalInformationParsed = await newInsertPersonalInformationParams.safeParseAsync({ ...payload });
     if (!personalInformationParsed.success) {
       setErrors(personalInformationParsed?.error.flatten().fieldErrors);
       return;
@@ -172,14 +177,14 @@ const PersonalInformationForm = ({
         </div>
         <div>
           <Input
-            type="text"
+            type="number"
             name="salary"
             placeholder="Salario"
             className={cn(errors?.salary ? "ring ring-destructive" : "")}
             defaultValue={personalInformation?.salary ?? ""}
           />
           {errors?.salary ? (
-            <p className="text-xs text-destructive text-red-500 mt-2">{errors?.salary}</p>
+            <p className="text-xs text-destructive text-red-500 mt-2">{errors.salary}</p>
 
           ) : (
             <div className="h-6" />
