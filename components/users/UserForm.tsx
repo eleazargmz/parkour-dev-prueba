@@ -16,7 +16,7 @@ import { useBackPath } from "@/components/shared/BackButton";
 
 
 
-import { type User, insertUserParams } from "@/lib/db/schema/users";
+import { type User, insertUserParams } from "@/schemas/customUserSchema";
 import {
   createUserAction,
   deleteUserAction,

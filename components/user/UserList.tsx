@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { type User, CompleteUser } from "@/lib/db/schema/user";
+import { type User, CompleteUser } from "@/schemas/customUserSchema";
 import Modal from "@/components/shared/Modal";
 
 import { useOptimisticUsers } from "@/app/(app)/user/useOptimisticUsers";

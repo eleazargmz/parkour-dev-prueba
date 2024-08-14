@@ -13,7 +13,7 @@ import {
   userIdSchema,
   insertUserParams,
   updateUserParams,
-} from "@/lib/db/schema/users";
+} from "@/schemas/customUserSchema";
 
 const handleErrors = (e: unknown) => {
   const errMsg = "Error, please try again.";

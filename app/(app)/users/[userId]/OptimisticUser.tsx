@@ -2,7 +2,7 @@
 
 import { useOptimistic, useState } from "react";
 import { TAddOptimistic } from "@/app/(app)/users/useOptimisticUsers";
-import { type User } from "@/lib/db/schema/users";
+import { type User } from "@/schemas/customUserSchema";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";

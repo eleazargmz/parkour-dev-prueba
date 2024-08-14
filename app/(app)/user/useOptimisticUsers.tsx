@@ -1,5 +1,5 @@
 
-import { type User, type CompleteUser } from "@/lib/db/schema/user";
+import { type User, type CompleteUser } from "@/schemas/customUserSchema";
 import { OptimisticAction } from "@/lib/utils";
 import { useOptimistic } from "react";
 
@@ -21,7 +21,7 @@ export const useOptimisticUsers = (
 
       const optimisticUser = {
         ...data,
-        
+        // emailVerified: data.emailVerified ?? null,
         id: "optimistic",
       };
 

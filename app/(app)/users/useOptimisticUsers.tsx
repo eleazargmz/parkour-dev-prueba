@@ -1,5 +1,5 @@
 
-import { type User, type CompleteUser } from "@/lib/db/schema/users";
+import { type User, type CompleteUser } from "@/schemas/customUserSchema";
 import { OptimisticAction } from "@/lib/utils";
 import { useOptimistic } from "react";
 
