@@ -12,8 +12,8 @@ import { useOptimisticPersonalInformations } from "@/app/(app)/personal-informat
 import { Button } from "@/components/ui/button";
 import PersonalInformationForm from "./PersonalInformationForm";
 import { PlusIcon } from "lucide-react";
-import { DataTable } from "@/payments/data-table";
-import { columns, Payment } from "@/payments/Columns";
+import { DataTable } from "@/components/dataTablePersonalInfo/data-table";
+import { columns, Payment } from "@/components/dataTablePersonalInfo/Columns";
 
 type TOpenModal = (personalInformation?: PersonalInformation) => void;
 
