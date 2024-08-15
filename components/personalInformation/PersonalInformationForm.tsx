@@ -127,7 +127,7 @@ const PersonalInformationForm = ({
     }
   };
   return (
-    <form action={handleSubmit} onChange={handleChange} className={"bg-gray-50 p-6 rounded-lg"}>
+    <form action={handleSubmit} onChange={handleChange} className={"bg-muted p-6  rounded-lg"}>
       {/* Schema fields start */}
       <div className="grid grid-cols-2 gap-4">
         {/* Name Input */}
@@ -255,7 +255,7 @@ const SaveButton = ({
     <Button
       type="submit"
       className="mr-2"
-      variant={"teal"}
+      variant={"teal3"}
       disabled={isCreating || isUpdating || errors}
       aria-disabled={isCreating || isUpdating || errors}
     >

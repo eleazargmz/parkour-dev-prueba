@@ -52,7 +52,7 @@ export default function PersonalInformationList({
         />
       </Modal>
       <div className="absolute right-0 top-0 ">
-        <Button onClick={() => openModal()} variant={"teal"}>
+        <Button onClick={() => openModal()} variant={"teal3"}>
           Agregar Información
         </Button>
       </div>
@@ -94,7 +94,7 @@ const PersonalInformation = ({
 
   return (
     <>
-      <div className="w-full mt-5 p-4 bg-gray-50 rounded-xl">
+      <div className="w-full mt-5 p-4 bg-muted-foreground rounded-xl">
         <div className="w-full rounded-xl">
           <DataTable columns={columns} data={newPersonalInformation} />
         </div>

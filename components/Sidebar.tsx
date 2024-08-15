@@ -11,10 +11,10 @@ const Sidebar = async () => {
   if (session.session === null) return null;
 
   return (
-    <aside className="h-screen min-w-52 bg-teal-500 hidden text-white md:block ps-4 pt-8 border-r shadow-inner">
+    <aside className="h-screen min-w-52 bg-card-foreground hidden text-white md:block ps-4 pt-8 border-r shadow-inner">
       <div className="flex flex-col justify-between h-full">
         <div className="space-y-4">
-          <h3 className="text-xl text-white items-center font-bold mb-5">Parkour.dev</h3>
+          <h3 className="text-xl text-muted-foreground-ip items-center font-bold mb-5">Parkour.dev</h3>
           <UserDetails session={session} />
           <SidebarItems />
         </div>
@@ -36,7 +36,7 @@ const UserDetails = ({ session }: { session: AuthSession }) => {
     <Link href="/account">
       <div className="flex flex-col items-center w-full pt-4 font-bold px-2 mb-16">
         <Avatar className="h-16 w-16 mb-2">
-          <AvatarFallback className="border-border border-4 font-bold text-lg text-muted-foreground">
+          <AvatarFallback className="border-border border-4 font-bold text-lg bg-muted-foreground-ip">
             {user.name
               ? user.name
                 ?.split(" ")
@@ -45,7 +45,7 @@ const UserDetails = ({ session }: { session: AuthSession }) => {
               : "~"}
           </AvatarFallback>
         </Avatar>
-        <div className="text-center text-muted-foreground">
+        <div className="text-center text-muted-foreground-ip">
           <p className="text-lg">{user.name ?? "John Doe"}</p>
           <p className="text-sm font-light">
             {user.email ?? "john@doe.com"}

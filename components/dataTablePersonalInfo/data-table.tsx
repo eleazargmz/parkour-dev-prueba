@@ -91,17 +91,17 @@ export function DataTable<TData, TValue>({
           onChange={(event) =>
             table.getColumn(currentStatus)?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm bg-muted-foreground-ip"
           disabled={!currentStatus}
         />
         <Select
           value={currentStatus}
           onValueChange={handleSelectChange}
         >
-          <SelectTrigger className="w-[180px] bg-teal-500 border-teal-500 rounded text-white font-bold">
+          <SelectTrigger className="w-[180px] bg-card-foreground border-card-foreground rounded text-white font-bold">
             <SelectValue placeholder={`Buscar por ${currentStatus}...`} />
           </SelectTrigger>
-          <SelectContent className="w-[180px] bg-gray-50">
+          <SelectContent className="w-[180px] text-muted-foreground-ip">
             <SelectGroup>
               <SelectItem value="ci">Cédula</SelectItem>
               <SelectItem value="name">Nombre</SelectItem>

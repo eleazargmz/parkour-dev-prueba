@@ -34,6 +34,10 @@ module.exports = {
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
+        },  
+        ip: {
+          DEFAULT: "hsl(var(--muted-id))",
+          foreground: "hsl(var(--muted-foreground-ip))",
         },
         accent: {
           DEFAULT: "hsl(var(--accent))",

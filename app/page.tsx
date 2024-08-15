@@ -11,8 +11,8 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       <NavbarHomePage />
-      <section className="flex flex-col items-center justify-center flex-1">
-        <h1 className="text-5xl font-bold text-teal-500">Página de inicio</h1>
+      <section className="flex flex-col items-center bg-gray-50 justify-center flex-1">
+        <h1 className="text-5xl font-bold bg-gray-50 text-teal-500">Página de inicio</h1>
       </section>
     </div>
   );

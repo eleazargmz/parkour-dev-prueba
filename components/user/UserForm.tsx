@@ -10,7 +10,7 @@ import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 import { type Action, cn } from "@/lib/utils";
 import { type TAddOptimistic } from "@/app/(app)/user/useOptimisticUsers";
 
-import { Input } from "@/components/ui/input";
+// import { input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useBackPath } from "@/components/shared/BackButton";
@@ -132,7 +132,7 @@ const UserForm = ({
   };
 
   return (
-    <div className="flex items-center justify-center p-28 bg-gray-200">
+    <div className="flex items-center justify-center p-28 bg-gray-200 min-h-screen">
       <form action={handleSubmit} onChange={handleChange} className={"px-12 py-8 shadow-xl bg-gray-50 rounded-2xl"}>
         {/* Schema fields start */}
         <div>
@@ -140,38 +140,38 @@ const UserForm = ({
             Registro
           </h1>
           {error && <span className="text-xs text-red-500">{error}</span>}
-          <Input
+          <input
             type="text"
             name="name"
             placeholder="Nombre de usuario"
-            className={cn(errors?.name ? "ring ring-destructive" : "")}
+            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
           />
           {errors?.name && (
             <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
           )}
-          <Input
+          <input
             type="email"
             name="email"
             placeholder="Correo electrónico"
-            className={cn(errors?.email ? "ring ring-destructive" : "")}
+            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
           />
           {errors?.email && (
             <p className="text-xs text-destructive text-red-500 mt-2">{errors.email}</p>
           )}
-          <Input
+          <input
             type="password"
             name="password"
             placeholder="Contraseña"
-            className={cn(errors?.password ? "ring ring-destructive" : "")}
+            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
           />
           {errors?.password && (
             <p className="text-xs text-destructive text-red-500 mt-2">{errors.password}</p>
           )}
-          <Input
+          <input
             type="password"
             name="confirmPassword"
             placeholder="Confirmar contraseña"
-            className={cn(errors?.password ? "ring ring-destructive" : "")}
+            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
             defaultValue={user?.password ?? ""}
           />
           {errors?.confirmPassword && (

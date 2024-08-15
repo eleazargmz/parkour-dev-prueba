@@ -12,7 +12,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         type={type}
         placeholder={placeholder}
         className={cn(
-          "block w-full p-2 my-2  bg-gray-100 text-black border-2 border-gray-300 rounded",
+          "block w-full p-2 my-2  bg-card text-primary border-2 border-gray-300 rounded",
           className
         )}
         ref={ref}

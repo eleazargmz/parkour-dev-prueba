@@ -10,7 +10,7 @@ export default function SignIn() {
 
   if (session) {
     return (
-      <div className="flex justify-center items-center hover:text-teal-500 text-white mb-3  ">
+      <div className="flex justify-center items-center hover:text-card-foreground text-white mb-3  ">
         {/* <p>
           Signed in as{" "}
           <span className="font-medium">{session.user?.email}</span>
