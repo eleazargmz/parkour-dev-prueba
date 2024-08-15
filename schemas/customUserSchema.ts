@@ -8,7 +8,7 @@ export const customUserSchema = z.object({
   name: z.string().min(1, {message: "El nombre es obligatorio"}),
   email: z.string().email({ message: "Dirección de correo electrónico no válida" }),
   password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }),
-  emailVerified: z.date().nullable().optional(),
+  emailVerified: z.date().nullable().default(null),
   confirmPassword: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres" }).optional(),
   createdAt: z.date(),
   updatedAt: z.date(),
