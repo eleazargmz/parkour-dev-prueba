@@ -84,6 +84,10 @@ Desarrollé una aplicación web utilizando Kirimase, una herramienta de línea d
 
 Implementé la autenticación de usuarios con NextAuth, utilizando el proveedor de credenciales para permitir el inicio de sesión mediante correo electrónico y contraseña. Las contraseñas se cifran con bcrypt antes de ser almacenadas en la base de datos PostgreSQL, asegurando la protección de la información del usuario.
 
+## Correos Transaccionales
+
+Implementé la funcionalidad de correos transaccionales para la verificación de correo electrónico. Utilicé Resend y react-email para enviar un enlace de verificación al correo electrónico proporcionado por el usuario durante el registro. Esta funcionalidad garantiza que solo se registren usuarios con correos electrónicos válidos.
+
 ## Estilo y Diseño
 
 Modifiqué los estilos del menú superior, menú lateral, botones, iconos y avatar para mejorar la apariencia de la interfaz de usuario.
