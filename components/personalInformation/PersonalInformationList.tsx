@@ -107,14 +107,15 @@ const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
   return (
     <div className="text-center">
       <h3 className="mt-2 text-sm font-semibold text-secondary-foreground">
-        No personal information
+        No hay información personal
       </h3>
-      <p className="mt-1 text-sm text-muted-foreground">
-        Get started by creating a new personal information.
+      <p className="mt-1 text-sm text-secondary-foreground">
+        Comienza creando una nueva información personal.
       </p>
       <div className="mt-6">
-        <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Personal Information </Button>
+        {/* <Button onClick={() => openModal()}>
+          <PlusIcon className="h-4" /> Nueva Información Personal
+        </Button> */}
       </div>
     </div>
   );

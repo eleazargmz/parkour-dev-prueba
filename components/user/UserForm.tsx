@@ -25,6 +25,7 @@ import {
   updateUserAction,
 } from "@/lib/actions/user";
 import Link from "next/link";
+import clsx from "clsx";
 
 const UserForm = ({
 
@@ -74,7 +75,7 @@ const UserForm = ({
   const handleSubmit = async (data: FormData) => {
     setErrors(null);
     const payload = Object.fromEntries(data.entries());
-
+    console.log("-------payload------", payload)
 
     if (payload.password !== payload.confirmPassword) {
       setError("Las contraseñas no coinciden")
@@ -83,14 +84,15 @@ const UserForm = ({
       }, 7000);
       return;
     }
+    console.log("-------payload 2------", payload)
 
     const userParsed = await insertUserParams.safeParseAsync({ ...payload });
-
+    console.log("------userParsed------", userParsed)
     if (!userParsed.success) {
       setErrors(userParsed?.error.flatten().fieldErrors);
       return;
     }
-
+    console.log("----Paso------")
     closeModal && closeModal();
     const values = userParsed.data;
     const pendingUser: UserSchema = {
@@ -106,6 +108,7 @@ const UserForm = ({
           action: editing ? "update" : "create",
         });
 
+        console.log("-----Value Create----", values)
         const error = editing
           ? await updateUserAction({ ...values, id: user.id })
           : await createUserAction(values);
