@@ -10,7 +10,11 @@ type FormData = {
   password: string;
 }
 
-const LoginPage = () => {
+const LoginPage = ({
+  searchParams
+}: {
+  searchParams: {verified: string}
+}) => {
   const [error, setError] = useState<string>("");
   const {
     register,
@@ -18,6 +22,8 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm<FormData>();
   const router = useRouter();
+
+  const isVerified = searchParams.verified === "true"; 
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const res = await signIn("credentials", {
@@ -30,7 +36,7 @@ const LoginPage = () => {
       setError(res.error);
       setTimeout(() => {
         setError("");
-      }, 4000);
+      }, 6000);
     } else {
       router.push('/dashboard');
       router.refresh();
@@ -40,13 +46,14 @@ const LoginPage = () => {
   return (
     <div className="flex items-center justify-center p-40 min-h-screen bg-gray-200">
       <form
-        className="px-12 py-8 shadow-xl bg-gray-50 rounded-2xl"
+        className="px-12 py-8 shadow-xl bg-gray-50 rounded-2xl w-96"
         onSubmit={handleSubmit(onSubmit)}
       >
         <h1 className="w-full m-auto mb-4 text-2xl text-teal-600 font-bold text-center">
           Iniciar sesión
         </h1>
         {error && <span className="text-sm text-red-500">{error}</span>}
+        {isVerified &&  <span className="text-sm text-green-500">Correo electrónico verificado</span>}
         <input
           type="email"
           {...register("email", {

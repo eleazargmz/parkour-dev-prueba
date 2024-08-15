@@ -18,7 +18,7 @@ const Sidebar = async () => {
           <UserDetails session={session} />
           <SidebarItems />
         </div>
-          <SignIn />
+        <SignIn />
       </div>
     </aside>
   );
@@ -39,7 +39,8 @@ const UserDetails = ({ session }: { session: AuthSession }) => {
           <AvatarFallback className="border-border border-4 font-bold text-lg bg-muted-foreground-ip">
             {user.name
               ? user.name
-                ?.split(" ")
+                .split(" ")
+                .filter(Boolean) // Filtrar palabras vacías
                 .map((word) => word[0].toUpperCase())
                 .join("")
               : "~"}

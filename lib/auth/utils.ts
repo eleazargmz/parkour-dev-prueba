@@ -5,8 +5,10 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { Adapter } from "next-auth/adapters";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { v4 as uuidv4 } from 'uuid';
 import { env } from "@/lib/env.mjs";
 import { use } from "react";
+import { sendEmailVerification } from "./mail";
 
 declare module "next-auth" {
   interface Session {
@@ -62,6 +64,35 @@ export const authOptions: NextAuthOptions = {
           user.password
         );
         if (!comparingPassword) throw new Error("Contraseña incorrecta");
+
+        if(!user.emailVerified) {
+          const verifyTokenExists = await db.verificationToken.findFirst({
+            where: {
+              identifier: user.email
+            }
+          })
+          if(verifyTokenExists?.identifier) {
+            await db.verificationToken.delete({
+              where: {
+                identifier: user.email,
+                token: verifyTokenExists.token,
+              }
+            })
+          }
+          const token = uuidv4();
+          await db.verificationToken.create({
+            data: {
+              identifier: user.email,
+              token,
+              expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
+            }
+          })
+
+          await sendEmailVerification(user.email, token, user.name)
+
+          throw new Error("Por favor, verifica tu correo electrónico para completar la verificación")
+        }
+
         return {
           id: user.id,
           name: user.name,
