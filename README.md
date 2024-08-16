@@ -70,6 +70,34 @@ npm run db:generate
 Ejecuta las migraciones para actualizar la base de datos con el esquema definido:
 npm run db:migrate
 
+
+Para obtener la variable AUTH_RESEND_KEY de Resend, sigue estos pasos precisos:
+
+Inicia Sesión en Resend:
+
+Ve a Resend y accede a tu cuenta. Si aún no tienes una cuenta, regístrate primero.
+Accede al Dashboard:
+
+Una vez dentro del dashboard de Resend, busca la sección de API Keys o API Tokens. Esto suele encontrarse en la configuración de la cuenta o en un apartado de administración de API.
+Genera una Nueva Clave de API:
+
+En la sección de API Keys, selecciona la opción para crear una nueva clave o generar un nuevo token.
+Asigna un nombre a la clave si es necesario y guarda la configuración.
+Copia la Clave de API:
+
+Después de generar la clave, copia el valor proporcionado. Esta es tu AUTH_RESEND_KEY.
+Configura la Variable de Entorno:
+
+Abre el archivo .env en tu proyecto. Si no existe, créalo en la raíz de tu proyecto.
+Agrega la siguiente línea al archivo .env:
+env
+Copiar código
+AUTH_RESEND_KEY=tu_clave_de_api
+Reemplaza tu_clave_de_api con la clave que copiaste de Resend.
+Accede a la Variable en tu Código:
+
+En tu código, puedes acceder a esta variable de entorno usando process.env.AUTH_RESEND_KEY. Asegúrate de que tu aplicación esté configurada para cargar las variables de entorno desde el archivo .env.
+
 ## Paso 5: Iniciar el Servidor de Desarrollo
 Inicia el servidor de desarrollo de Next.js:
 npm run dev
