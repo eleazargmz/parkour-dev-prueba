@@ -66,30 +66,6 @@ export const authOptions: NextAuthOptions = {
         if (!comparingPassword) throw new Error("Contraseña incorrecta");
 
         if(!user.emailVerified) {
-          const verifyTokenExists = await db.verificationToken.findFirst({
-            where: {
-              identifier: user.email
-            }
-          })
-          if(verifyTokenExists?.identifier) {
-            await db.verificationToken.delete({
-              where: {
-                identifier: user.email,
-                token: verifyTokenExists.token,
-              }
-            })
-          }
-          const token = uuidv4();
-          await db.verificationToken.create({
-            data: {
-              identifier: user.email,
-              token,
-              expires: new Date(Date.now() + 1000 * 60 * 60 * 24)
-            }
-          })
-
-          await sendEmailVerification(user.email, token, user.name)
-
           throw new Error("Por favor, verifica tu correo electrónico para completar la verificación")
         }
 

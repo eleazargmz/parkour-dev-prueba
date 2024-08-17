@@ -26,6 +26,7 @@ import {
 } from "@/lib/actions/user";
 import Link from "next/link";
 import clsx from "clsx";
+import { setTimeout } from "timers";
 
 const UserForm = ({
 
@@ -107,7 +108,6 @@ const UserForm = ({
         const error = editing
           ? await updateUserAction({ ...values, id: user.id })
           : await createUserAction(values);
-        setError(error ?? "")
 
         const errorFormatted = {
           error: error ?? "Error",
@@ -118,9 +118,18 @@ const UserForm = ({
           editing ? "update" : "create",
           error ? errorFormatted : undefined,
         );
-        if (errorFormatted.error === "Error") {
-          router.push('/sign-in');
+
+        if (error) {
+          setError(error ?? "")
+          setTimeout(() => {
+            setError("")
+            router.push('/sign-in');
+          }, 8000);
         }
+
+        // if (errorFormatted.error === "Error") {
+        //   router.push('/sign-in');
+        // }
       });
     } catch (e) {
       if (e instanceof z.ZodError) {
@@ -131,88 +140,92 @@ const UserForm = ({
 
   return (
     <div className="flex items-center justify-center p-28 bg-gray-200 min-h-screen">
-      <form action={handleSubmit} onChange={handleChange} className={"px-12 py-8 shadow-xl bg-gray-50 rounded-2xl"}>
-        {/* Schema fields start */}
-        <div>
-          <h1 className="w-full m-auto mb-4 text-teal-600 text-2xl font-bold text-center">
-            Registro
-          </h1>
-          {error && <span className="text-xs text-red-500">{error}</span>}
-          <input
-            type="text"
-            name="name"
-            placeholder="Nombre de usuario"
-            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-          />
-          {errors?.name && (
-            <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
-          )}
-          <input
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-          />
-          {errors?.email && (
-            <p className="text-xs text-destructive text-red-500 mt-2">{errors.email}</p>
-          )}
-          <input
-            type="password"
-            name="password"
-            placeholder="Contraseña"
-            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-          />
-          {errors?.password && (
-            <p className="text-xs text-destructive text-red-500 mt-2">{errors.password}</p>
-          )}
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirmar contraseña"
-            className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
-            defaultValue={user?.password ?? ""}
-          />
-          {errors?.confirmPassword && (
-            <p className="text-xs text-destructive text-red-500 mt-2">{errors.confirmPassword[0]}</p>
-          )}
-        </div>
-        {/* Schema fields end */}
+      <div className={"px-12 py-8 shadow-xl bg-gray-50 rounded-2xl w-96"}>
+        {error === "EmailVerification" ? <span className="text-lg text-blue-600">Por favor, verifica tu correo electrónico para completar la verificación</span> :
+          <form action={handleSubmit} onChange={handleChange}>
+            {/* Schema fields start */}
+            <div>
+              <h1 className="w-full m-auto mb-4 text-teal-600 text-2xl font-bold text-center">
+                Registro
+              </h1>
+              {error && <span className="text-xs text-red-500">{error}</span>}
+              <input
+                type="text"
+                name="name"
+                placeholder="Nombre de usuario"
+                className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
+              />
+              {errors?.name && (
+                <p className="text-xs text-destructive text-red-500 mt-2">{errors.name}</p>
+              )}
+              <input
+                type="email"
+                name="email"
+                placeholder="Correo electrónico"
+                className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
+              />
+              {errors?.email && (
+                <p className="text-xs text-destructive text-red-500 mt-2">{errors.email}</p>
+              )}
+              <input
+                type="password"
+                name="password"
+                placeholder="Contraseña"
+                className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
+              />
+              {errors?.password && (
+                <p className="text-xs text-destructive text-red-500 mt-2">{errors.password}</p>
+              )}
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirmar contraseña"
+                className="block w-full p-2 my-2 bg-gray-100 text-black border-2 border-gray-300 rounded"
+                defaultValue={user?.password ?? ""}
+              />
+              {errors?.confirmPassword && (
+                <p className="text-xs text-destructive text-red-500 mt-2">{errors.confirmPassword[0]}</p>
+              )}
+            </div>
+            {/* Schema fields end */}
 
-        {/* Save Button */}
-        <SaveButton errors={hasErrors} editing={editing} />
-        <Link
-          href="/sign-in"
-          className=" flex justify-center items-center mt-3 text-center text-teal-600"
-        >
-          Iniciar sesión
-        </Link>
+            {/* Save Button */}
+            <SaveButton errors={hasErrors} editing={editing} />
+            <Link
+              href="/sign-in"
+              className=" flex justify-center items-center mt-3 text-center text-teal-600"
+            >
+              Iniciar sesión
+            </Link>
 
-        {/* Delete Button */}
-        {editing ? (
-          <Button
-            type="button"
-            disabled={isDeleting || pending || hasErrors}
-            variant={"destructive"}
-            onClick={() => {
-              setIsDeleting(true);
-              closeModal && closeModal();
-              startMutation(async () => {
-                addOptimistic && addOptimistic({ action: "delete", data: user });
-                const error = await deleteUserAction(user.id);
-                setIsDeleting(false);
-                const errorFormatted = {
-                  error: error ?? "Error",
-                  values: user,
-                };
+            {/* Delete Button */}
+            {editing ? (
+              <Button
+                type="button"
+                disabled={isDeleting || pending || hasErrors}
+                variant={"destructive"}
+                onClick={() => {
+                  setIsDeleting(true);
+                  closeModal && closeModal();
+                  startMutation(async () => {
+                    addOptimistic && addOptimistic({ action: "delete", data: user });
+                    const error = await deleteUserAction(user.id);
+                    setIsDeleting(false);
+                    const errorFormatted = {
+                      error: error ?? "Error",
+                      values: user,
+                    };
 
-                onSuccess("delete", error ? errorFormatted : undefined);
-              });
-            }}
-          >
-            Eliminar{isDeleting ? "..." : ""}
-          </Button>
-        ) : null}
-      </form>
+                    onSuccess("delete", error ? errorFormatted : undefined);
+                  });
+                }}
+              >
+                Eliminar{isDeleting ? "..." : ""}
+              </Button>
+            ) : null}
+          </form>
+        }
+      </div>
     </div>
   );
 };
