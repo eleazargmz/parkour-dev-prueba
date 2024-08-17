@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -16,6 +16,7 @@ const LoginPage = ({
   searchParams: {verified: string}
 }) => {
   const [error, setError] = useState<string>("");
+  const [success, setSuccess] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -23,7 +24,14 @@ const LoginPage = ({
   } = useForm<FormData>();
   const router = useRouter();
 
-  const isVerified = searchParams.verified === "true"; 
+  useEffect(() => {
+    if (searchParams.verified === "true") {
+      setSuccess("Correo electrónico verificado");
+      setTimeout(() => {
+        setSuccess("");
+      }, 6000);
+    }
+  }, [searchParams.verified]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const res = await signIn("credentials", {
@@ -52,8 +60,8 @@ const LoginPage = ({
         <h1 className="w-full m-auto mb-4 text-2xl text-teal-600 font-bold text-center">
           Iniciar sesión
         </h1>
+        {success && <span className="text-sm text-green-500 block">{success}</span>}
         {error && <span className="text-sm text-red-500">{error}</span>}
-        {isVerified &&  <span className="text-sm text-green-500">Correo electrónico verificado</span>}
         <input
           type="email"
           {...register("email", {
