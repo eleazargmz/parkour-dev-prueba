@@ -10,7 +10,7 @@ export const sendEmailVerification = async <T extends string>(
 ): Promise<{ success?: boolean; error?: boolean }> => {
   try {
     await resend.emails.send({
-      from: "NextAuth.js <onboarding@resend.dev>",
+      from: "parkour@prelace.com",
       to: email,
       subject: "Verify your email",
       react: EmailTemplate({ firstName: name, token }),
