@@ -26,15 +26,15 @@ export const useOptimisticUsers = (
       };
 
       switch (action.action) {
-        case "create":
+        case "crear":
           return currentState.length === 0
             ? [optimisticUser]
             : [...currentState, optimisticUser];
-        case "update":
+        case "actualizar":
           return currentState.map((item) =>
             item.id === data.id ? { ...item, ...optimisticUser } : item,
           );
-        case "delete":
+        case "eliminar":
           return currentState.map((item) =>
             item.id === data.id ? { ...item, id: "delete" } : item,
           );

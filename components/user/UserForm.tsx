@@ -69,7 +69,7 @@ const UserForm = ({
       router.refresh();
       postSuccess && postSuccess();
       toast.success(`User ${action}d!`);
-      if (action === "delete") router.push(backpath);
+      if (action === "eliminar") router.push(backpath);
     }
   };
 
@@ -102,7 +102,7 @@ const UserForm = ({
       startMutation(async () => {
         addOptimistic && addOptimistic({
           data: pendingUser,
-          action: editing ? "update" : "create",
+          action: editing ? "actualizar" : "crear",
         });
 
         const error = editing
@@ -115,16 +115,16 @@ const UserForm = ({
         };
 
         onSuccess(
-          editing ? "update" : "create",
+          editing ? "actualizar" : "crear",
           error ? errorFormatted : undefined,
         );
 
         if (error) {
           setError(error ?? "")
-          setTimeout(() => {
-            setError("")
-            router.push('/sign-in');
-          }, 8000);
+          // setTimeout(() => {
+          //   setError("")
+          //   // router.push('/sign-in');
+          // }, 8000);
         }
 
         // if (errorFormatted.error === "Error") {
@@ -141,7 +141,17 @@ const UserForm = ({
   return (
     <div className="flex items-center justify-center p-28 bg-gray-200 min-h-screen">
       <div className={"px-12 py-8 shadow-xl bg-gray-50 rounded-2xl w-96"}>
-        {error === "EmailVerification" ? <span className="text-lg text-blue-600">Por favor, verifica tu correo electrónico para completar la verificación</span> :
+        {error === "EmailVerification" ?
+          <>
+            <span className="text-lg text-black">Por favor, verifica tu correo electrónico para completar la verificación.</span>
+            <Button
+              type="submit"
+              className="w-full p-2 mt-7 text-white bg-teal-500 rounded hover:bg-teal-600 font-bold"
+              onClick={() => router.push('/sign-in')}
+            >
+              Iniciar sesión
+            </Button>
+          </> :
           <form action={handleSubmit} onChange={handleChange}>
             {/* Schema fields start */}
             <div>
@@ -208,7 +218,7 @@ const UserForm = ({
                   setIsDeleting(true);
                   closeModal && closeModal();
                   startMutation(async () => {
-                    addOptimistic && addOptimistic({ action: "delete", data: user });
+                    addOptimistic && addOptimistic({ action: "eliminar", data: user });
                     const error = await deleteUserAction(user.id);
                     setIsDeleting(false);
                     const errorFormatted = {
@@ -216,7 +226,7 @@ const UserForm = ({
                       values: user,
                     };
 
-                    onSuccess("delete", error ? errorFormatted : undefined);
+                    onSuccess("eliminar", error ? errorFormatted : undefined);
                   });
                 }}
               >
@@ -251,7 +261,7 @@ const SaveButton = ({
     >
       {editing
         ? `Sav${isUpdating ? "ing..." : "e"}`
-        : `Creat${isCreating ? "ing..." : "e"}`}
+        : `Crear${isCreating ? "" : ""}`}
     </Button>
   );
 };

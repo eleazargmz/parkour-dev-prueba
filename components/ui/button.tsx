@@ -21,7 +21,7 @@ const buttonVariants = cva(
         teal: "w-full p-2 mt-3 text-white bg-teal-500 rounded hover:bg-teal-600 font-bold",
         teal2: "w-28 my-3 p-2 text-white bg-card-foreground rounded hover:bg-teal-600 font-bold",
         teal3: "w-full p-2 mt-3 text-white bg-card-foreground rounded hover:bg-teal-600 font-bold",
-        signOut: "p-2 px-3 text-white bg-card-foreground rounded hover:bg-gray-50 hover:text-card-foreground font-bold mr-1 text-lg",
+        signOut: "p-2 px-3 text-white bg-card-foreground rounded hover:bg-gray-50 hover:text-card-foreground font-bold mr-1 text-sm",
       },
       size: {
         default: "h-10 px-4 py-2",

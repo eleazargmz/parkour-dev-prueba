@@ -64,7 +64,7 @@ const UserForm = ({
       router.refresh();
       postSuccess && postSuccess();
       toast.success(`User ${action}d!`);
-      if (action === "delete") router.push(backpath);
+      if (action === "eliminar") router.push(backpath);
     }
   };
 
@@ -90,7 +90,7 @@ const UserForm = ({
       startMutation(async () => {
         addOptimistic && addOptimistic({
           data: pendingUser,
-          action: editing ? "update" : "create",
+          action: editing ? "actualizar" : "crear",
         });
 
         const error = editing
@@ -102,7 +102,7 @@ const UserForm = ({
           values: pendingUser 
         };
         onSuccess(
-          editing ? "update" : "create",
+          editing ? "actualizar" : "crear",
           error ? errorFormatted : undefined,
         );
       });
@@ -173,7 +173,7 @@ const UserForm = ({
             setIsDeleting(true);
             closeModal && closeModal();
             startMutation(async () => {
-              addOptimistic && addOptimistic({ action: "delete", data: user });
+              addOptimistic && addOptimistic({ action: "eliminar", data: user });
               const error = await deleteUserAction(user.id);
               setIsDeleting(false);
               const errorFormatted = {
@@ -181,7 +181,7 @@ const UserForm = ({
                 values: user,
               };
 
-              onSuccess("delete", error ? errorFormatted : undefined);
+              onSuccess("eliminar", error ? errorFormatted : undefined);
             });
           }}
         >

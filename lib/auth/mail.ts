@@ -12,7 +12,7 @@ export const sendEmailVerification = async <T extends string>(
     await resend.emails.send({
       from: "parkour@prelace.com",
       to: email,
-      subject: "Verify your email",
+      subject: "Verifique su correo electrónico",
       react: EmailTemplate({ firstName: name, token }),
     });
     return {

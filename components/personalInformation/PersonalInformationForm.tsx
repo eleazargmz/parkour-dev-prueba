@@ -65,8 +65,8 @@ const PersonalInformationForm = ({
     } else {
       router.refresh();
       postSuccess && postSuccess();
-      toast.success(`PersonalInformation ${action}d!`);
-      if (action === "delete") router.push(backpath);
+      toast.success(`Información personal creada!`);
+      if (action === "eliminar") router.push(backpath);
     }
   };
 
@@ -103,7 +103,7 @@ const PersonalInformationForm = ({
       startMutation(async () => {
         addOptimistic && addOptimistic({
           data: pendingPersonalInformation,
-          action: editing ? "update" : "create",
+          action: editing ? "actualizar" : "crear",
         });
 
         const error = editing
@@ -115,7 +115,7 @@ const PersonalInformationForm = ({
           values: pendingPersonalInformation
         };
         onSuccess(
-          editing ? "update" : "create",
+          editing ? "actualizar" : "crear",
           error ? errorFormatted : undefined,
         );
       });
@@ -219,7 +219,7 @@ const PersonalInformationForm = ({
             setIsDeleting(true);
             closeModal && closeModal();
             startMutation(async () => {
-              addOptimistic && addOptimistic({ action: "delete", data: personalInformation });
+              addOptimistic && addOptimistic({ action: "eliminar", data: personalInformation });
               const error = await deletePersonalInformationAction(personalInformation.id);
               setIsDeleting(false);
               const errorFormatted = {
@@ -227,7 +227,7 @@ const PersonalInformationForm = ({
                 values: personalInformation,
               };
 
-              onSuccess("delete", error ? errorFormatted : undefined);
+              onSuccess("eliminar", error ? errorFormatted : undefined);
             });
           }}
         >
@@ -260,7 +260,7 @@ const SaveButton = ({
     >
       {editing
         ? `Sav${isUpdating ? "ing..." : "e"}`
-        : `Agregar Registr${isCreating ? "ing..." : "o"}`}
+        : `Agregar Registro${isCreating ? "" : ""}`}
     </Button>
   );
 };
